@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "711531984870",
+    "firebase_url": "https://cristmas-gift-thrower.firebaseio.com",
+    "project_id": "cristmas-gift-thrower",
+    "storage_bucket": "cristmas-gift-thrower.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711531984870:android:d2f124eca96044fe",
+        "android_client_info": {
+          "package_name": "com.MirrorGames.CristmasGiftThrower"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711531984870-rrcsubf59s2uimjpcp7m9097rsdfnbir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv4mmrdoMbHvnquQ6gXsSloZbNMsJd8yE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
