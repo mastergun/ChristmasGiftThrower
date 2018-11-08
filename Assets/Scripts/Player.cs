@@ -6,6 +6,7 @@ public class Player : MonoBehaviour {
 
     public float force = 10;
     public float maxHeight = 30;
+
     Vector3 initPos;
     bool flying = false;
 	// Use this for initialization
@@ -17,16 +18,14 @@ public class Player : MonoBehaviour {
 	void FixedUpdate () {
         if (flying)
         {
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1)* force);
-            if(this.transform.rotation.z < 0.5)this.transform.Rotate(new Vector3(0,0,1),GetComponent<Rigidbody2D>().velocity.y/5);
-            Debug.Log(this.transform.rotation.z);
+            if(this.transform.position.y < maxHeight/3.5) GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1)* force);
+            if (this.transform.rotation.z < 0.5)this.transform.Rotate(new Vector3(0,0,1),GetComponent<Rigidbody2D>().velocity.y/5);
         }
         else
         {
             if (this.transform.rotation.z > -0.3) this.transform.Rotate(new Vector3(0,0,1), GetComponent<Rigidbody2D>().velocity.y/10);
-            Debug.Log(this.transform.rotation.z);
         }
-	}
+    }
 
     public void StartFly()
     {
@@ -40,44 +39,24 @@ public class Player : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        //if (activatedCollisions)
-        //{
-        //    if (col.gameObject.tag == "Shooter" && !flying)
-        //    {
-        //        source.PlayOneShot(hitChihuahua, 1.0f);
-        //        this.GetComponent<SpriteRenderer>().sprite = frames[1];
 
-        //        Vector2 dir = Vector2.zero;
-        //        for (int i = 0; i < col.contacts.Length; i++)
-        //        {
-        //            if (col.contacts[i].point != null)
-        //            {
-        //                dir = col.contacts[i].point;
-        //                break;
-        //            }
-        //        }
-        //        dir = new Vector2(this.transform.position.x, this.transform.position.y) - dir;
-        //        this.GetComponent<Rigidbody2D>().AddForce(dir * GetShotForce());
-        //        this.GetComponent<Rigidbody2D>().AddTorque(-200);
-        //        ActivateVelocimeter(false);
-        //        gameControlRef.GetComponent<ScoreManager>().parseScore = true;
-        //        gameControlRef.AttachCamera();
-        //        Velocimeter.GetComponentInParent<DeactivateButton>().activateSelf(false);
-        //        gameControlRef.foot.deactivateInput = false;
-        //        flying = true;
-        //    }
-        //    else 
-        //}
-        if (col.gameObject.tag == "floor")
+        if (col.gameObject.tag == "floor") LoseGame();
+        if (col.gameObject.tag == "Enemy")
         {
-            Debug.Log("floor detected");
-            this.transform.position = initPos;
-            this.transform.rotation = Quaternion.identity;
-            //Vector2 dir = new Vector2(-1, 1).normalized;
-            //source.PlayOneShot(trampolin, 1.0f);
-            ////this.GetComponent<Rigidbody2D>().AddForce(dir * enemiesForceBase);
-            //this.GetComponent<Rigidbody2D>().AddForce(dir * this.GetComponent<Rigidbody2D>().velocity.magnitude * enemiesForceBase);
-            //this.GetComponent<Rigidbody2D>().AddTorque(5.0f);
+            //animation of dead
+            LoseGame();
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Enemy") LoseGame();
+    }
+
+    void LoseGame()
+    {
+        this.transform.position = initPos;
+        this.transform.rotation = Quaternion.identity;
+        Debug.Log("you Lose");
     }
 }
