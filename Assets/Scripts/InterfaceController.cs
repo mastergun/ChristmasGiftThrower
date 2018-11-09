@@ -38,6 +38,7 @@ public class InterfaceController : MonoBehaviour {
         GetComponent<GamePlayManager>().gameState = GamePlayManager.GameState.WAITING;
         GetComponent<GamePlayManager>().playerRef.SetState(Player.PlayerState.WAITING);
         GetComponent<ScoreManager>().parseScore = false;
+        GetComponent<InicializerScript>().ShowBanner();
         //GetComponent<GameController>().ResetGame();
         //GetComponent<ScoreManager>().ResetCurrentScore();
         //GetComponent<InputController>().ResetInputController();
@@ -60,6 +61,7 @@ public class InterfaceController : MonoBehaviour {
     public void SetGameMenu()
     {
         SetMenu(MENUTYPE.GAMEMENU);
+        GetComponent<InicializerScript>().ShowBanner();
         GetComponent<GamePlayManager>().gameState = GamePlayManager.GameState.START;
 
         ////Debug.Log("current dificult is" + GetComponent<ScoreManager>().GetCurrentDifficult());
@@ -69,6 +71,7 @@ public class InterfaceController : MonoBehaviour {
     {
         //Debug.Log("setting restart menu");
         SetMenu(MENUTYPE.RESTARTMENU);
+        GetComponent<InicializerScript>().ShowBanner();
         //menus[(int)MENUTYPE.RESTARTMENU].GetComponent<MenuController>().SetCurrentScoreTexts(
         //                                    GetComponent<ScoreManager>().GetCurrentDifficult());
         //GetComponent<GameController>().ResetGame();

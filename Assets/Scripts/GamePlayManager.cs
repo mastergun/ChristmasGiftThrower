@@ -25,6 +25,7 @@ public class GamePlayManager : MonoBehaviour {
     private List<GameObject> enemiesInGame;
     private float dth = 0;
     private float dte = 0;
+    int publiCounter = 0;
     // Use this for initialization
     void Start () {
         enemiesInGame = new List<GameObject>();
@@ -69,6 +70,8 @@ public class GamePlayManager : MonoBehaviour {
                 GetComponent<ScoreManager>().CompareScore();
                 GetComponent<ScoreManager>().parseScore = false;
                 GetComponent<InterfaceController>().SetRestartMenu();
+                if (publiCounter % 5 == 4) GetComponent<InicializerScript>().ShowInterstitial();
+                publiCounter++;
                 gameState = GameState.WAITING;
                 break;
 
@@ -111,5 +114,6 @@ public class GamePlayManager : MonoBehaviour {
     public void ResetGame()
     {
         RemoveEnemiesInGame();
+        if (publiCounter % 5 == 4) GetComponent<InicializerScript>().PrepareInterstitial();
     }
 }

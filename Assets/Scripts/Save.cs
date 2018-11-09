@@ -6,6 +6,6 @@ using UnityEngine;
 public class Save {
 
     // Use this for initialization
-    public ScoreData score;
+    public ScoreData score = new ScoreData();
     public bool firstTimeGame = false;
 }
