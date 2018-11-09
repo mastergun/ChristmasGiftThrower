@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Save : MonoBehaviour {
+public class Save {
 
     // Use this for initialization
     public ScoreData score;

@@ -18,12 +18,14 @@ public class AutoMovement : MonoBehaviour {
     public void Freeze()
     {
         savedSpeed = speed;
+        Debug.Log("speed saved : "+ savedSpeed);
         speed = Vector3.zero;
     }
 
     public void UnFreeze()
     {
         speed = savedSpeed;
+        Debug.Log("speed seted : " + speed);
         //speed = Vector3.zero;
     }
 }

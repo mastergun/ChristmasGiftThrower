@@ -18,6 +18,10 @@ public class ScoreManager : MonoBehaviour {
     Score maxScore;
 
     public Text inGameScoreText;
+    public Text mainMenuScoreText;
+    public Text RestartMenuScoreText;
+    public GameObject HighScoreBG;
+
     bool firstTimeGame = true;
     public bool parseScore = false;
     public float pointsPerGift = 1;
@@ -33,7 +37,7 @@ public class ScoreManager : MonoBehaviour {
         {
             SetMaxScore(0, 0);
         }
-        parseScore = true;
+        //parseScore = true;
     }
 
     // Update is called once per frame
@@ -56,20 +60,41 @@ public class ScoreManager : MonoBehaviour {
         //SaveGame();
     }
 
-    void SetInGameScoreText()
+    public void SetInGameScoreText()
     {
         inGameScoreText.text = currentScore.points.ToString();
     }
 
+    public void SetMainMenuScoreText()
+    {
+        mainMenuScoreText.text = maxScore.points.ToString();
+    }
+
+    public void SetRestartMenuScoreText()
+    {
+        RestartMenuScoreText.text = currentScore.points.ToString();
+    }
+
     public bool CompareScore()
     {
+        SetRestartMenuScoreText();
         if (currentScore.points > maxScore.points)
         {
             maxScore.points = currentScore.points;
             maxScore.time = currentScore.time;
             SaveGame();
+            SetMainMenuScoreText();
+            HighScoreBG.SetActive(true);
         }
         return false;
+    }
+
+    public void ResetGame()
+    {
+        HighScoreBG.SetActive(false);
+        ResetCurrentScore();
+        SetInGameScoreText();
+        parseScore = true;
     }
 
     public void ResetCurrentScore()
@@ -113,6 +138,7 @@ public class ScoreManager : MonoBehaviour {
         Score s;
         s.points = save.score.maxScorePoints;
         s.time = save.score.bestTime;
+        maxScore = s;
         firstTimeGame = save.firstTimeGame;
     }
 
@@ -144,6 +170,7 @@ public class ScoreManager : MonoBehaviour {
 
             // set variables
             LoadScoreFromSaveObject(save);
+            SetMainMenuScoreText();
         }
         else
         {

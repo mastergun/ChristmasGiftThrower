@@ -31,11 +31,20 @@ public class Enemy : MonoBehaviour {
 	void Update () {
         switch (enemyState) { 
             case STATE.PREPARING:
+                //aqui va tot el que s'hagi d'inicialitzar de l'enemic
+                enemyState = STATE.WAITING;
                 break;
             case STATE.WARNING:
-                //dt += Time.deltaTime;
+                Debug.Log("moving enemy");
+                if (freezed)
+                {
+                    GetComponent<AutoMovement>().UnFreeze();
+                    freezed = false;
+                }
+                enemyState = STATE.ACTIVATING;
                 break;
             case STATE.ACTIVATING:
+
                 dt += Time.deltaTime;
                 if (oscilate && dt > 0.01)
                 {
@@ -52,7 +61,12 @@ public class Enemy : MonoBehaviour {
                 }
                 break;
             case STATE.WAITING:
-                if (!freezed) GetComponent<AutoMovement>().Freeze();
+                if (!freezed)
+                {
+                    GetComponent<AutoMovement>().Freeze();
+                    freezed = true;
+                }
+
                 break;
         }
 	}

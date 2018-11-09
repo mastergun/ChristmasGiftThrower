@@ -5,6 +5,8 @@ using UnityEngine;
 public class WarningScript : MonoBehaviour {
 
     public Enemy enemyRef;
+    public float lifeTime = 2;
+    private float dt;
 	// Use this for initialization
 	void Start () {
 		
@@ -12,6 +14,14 @@ public class WarningScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        dt += Time.deltaTime;
+        if (dt > lifeTime)
+        {
+            Debug.Log("enemyref call");
+            enemyRef.enemyState = Enemy.STATE.WARNING;
+            GetComponent<AutoDestroy>().SelfDestruction();
+        }
 	}
+
+
 }

@@ -33,7 +33,7 @@ public class Shoter : MonoBehaviour {
 
     public void SpawnGift()
     {
-        if (!giftThrowed) {
+        if (!giftThrowed && playerRef.GetComponent<Player>().activateInput) {
             InicializeGift();
             giftThrowed = true;
         }        

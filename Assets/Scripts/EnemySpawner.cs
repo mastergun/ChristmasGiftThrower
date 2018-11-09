@@ -43,7 +43,9 @@ public class EnemySpawner : MonoBehaviour {
     public GameObject SpawnEnemy(Vector3 rootPos)
     {
         int randomNumber = Random.Range(0, 4);
-        return InicializeEnemy(rootPos,(EnemyType)randomNumber);
+        GameObject e = InicializeEnemy(rootPos, (EnemyType)randomNumber);
+        InicializeWarningAlert(e.GetComponent<Enemy>());
+        return e;
     }
 
     GameObject InicializeEnemy(Vector3 rootPos, EnemyType type)
@@ -53,11 +55,10 @@ public class EnemySpawner : MonoBehaviour {
         if(mmyd.y > -4f)rootPos.y = playerRef.transform.position.y + Random.Range(mmyd.x, mmyd.y);
         e = (GameObject)Instantiate(enemyPrefab, rootPos, transform.rotation);
         e.GetComponent<AutoMovement>().speed= enemiesData[(int)type].velocity;
-        //e.GetComponent<AutoMovement>().Freeze();
         e.GetComponent<Enemy>().oscilate = enemiesData[(int)type].oscilate;
         e.GetComponent<Enemy>().shoter = enemiesData[(int)type].shoter;
-        e.GetComponent<Enemy>().enemyState = Enemy.STATE.ACTIVATING;
         e.GetComponent<AutoDestroy>().lifeTime = enemiesData[(int)type].time;
+        e.GetComponent<Enemy>().enemyState = Enemy.STATE.PREPARING;
         return e;
     }
 
@@ -67,6 +68,7 @@ public class EnemySpawner : MonoBehaviour {
         a = (GameObject)Instantiate(warningPrefab, Vector3.zero, transform.rotation);
         a.transform.SetParent(warningRootHUD.transform, false);
         a.transform.position = new Vector3(initWarningPos.transform.position.x, initWarningPos.transform.position.y, 0);
+        a.GetComponent<WarningScript>().enemyRef = enemyRef;
         //set enemy ref in the warning code
     }
 }

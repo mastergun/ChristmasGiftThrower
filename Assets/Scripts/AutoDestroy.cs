@@ -13,10 +13,13 @@ public class AutoDestroy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        deltaTime += Time.deltaTime;
-        if(deltaTime > lifeTime)
+        if(lifeTime >= 0)
         {
-            SelfDestruction();
+            deltaTime += Time.deltaTime;
+            if (deltaTime > lifeTime)
+            {
+                SelfDestruction();
+            }
         }
 	}
 
@@ -24,4 +27,10 @@ public class AutoDestroy : MonoBehaviour {
     {
         Destroy(this.gameObject);
     }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Border") SelfDestruction();
+    }
+
 }
