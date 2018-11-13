@@ -15,6 +15,7 @@ public class GamePlayManager : MonoBehaviour {
     public GameState gameState;
     public GameObject housesRoot;
     public GameObject housePrefab;
+    public GameObject houseLocatorPrefab;
 
     public Player playerRef;
     public float timeBtwHouses = 5;
@@ -26,6 +27,7 @@ public class GamePlayManager : MonoBehaviour {
     private float dth = 0;
     private float dte = 0;
     int publiCounter = 0;
+    public bool endedGame = false;
     // Use this for initialization
     void Start () {
         enemiesInGame = new List<GameObject>();
@@ -38,6 +40,7 @@ public class GamePlayManager : MonoBehaviour {
         switch (gameState)
         {
             case GameState.START:
+                if (publiCounter % 5 == 4) GetComponent<InicializerScript>().PrepareInterstitial();
                 GetComponent<ScoreManager>().ResetGame();
                 playerRef.SetState(Player.PlayerState.PREPARING);
                 gameState = GameState.WAITING;
@@ -50,7 +53,7 @@ public class GamePlayManager : MonoBehaviour {
                 if (dth > timeBtwHouses)
                 {
                     InicializeHouse();
-                    dth = 0;
+                    dth = Random.Range(0, timeBtwHouses/2);
                 }
                 if (dte > currentTimeBtwEnemies)
                 {
@@ -61,7 +64,8 @@ public class GamePlayManager : MonoBehaviour {
                 break;
 
             case GameState.ENDING:
-                freezeEnemies();
+                //freezeEnemies();
+                endedGame = true;
                 gameState = GameState.WAITING;
                 break;
 
@@ -89,6 +93,15 @@ public class GamePlayManager : MonoBehaviour {
 
     }
 
+    public void InicializeWarningAlert(Enemy enemyRef)
+    {
+        GameObject a;
+        a = (GameObject)Instantiate(houseLocatorPrefab, Vector3.zero, transform.rotation);
+        //a.transform.SetParent(warningRootHUD.transform, false);
+        //a.transform.position = new Vector3(initWarningPos.transform.position.x, initWarningPos.transform.position.y, 0);
+        
+        //set enemy ref in the warning code
+    }
     public void freezeEnemies()
     {
         if (enemiesInGame != null)
@@ -114,6 +127,7 @@ public class GamePlayManager : MonoBehaviour {
     public void ResetGame()
     {
         RemoveEnemiesInGame();
-        if (publiCounter % 5 == 4) GetComponent<InicializerScript>().PrepareInterstitial();
+        currentTimeBtwEnemies = maxTimeBtwEnemies;
+        endedGame = false;
     }
 }

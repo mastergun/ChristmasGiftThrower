@@ -86,13 +86,16 @@ public class Player : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-
-        if (col.gameObject.tag == "floor" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Border" ) //ResetPlayerPos();
+        if (!gameplayRef.endedGame)
         {
-            if(playerState != PlayerState.HIT || playerState != PlayerState.DIYING) playerState = PlayerState.HIT;
-            //animation of dead
-            //ResetPlayerPos();
+            if (playerState != PlayerState.HIT || playerState != PlayerState.DIYING) playerState = PlayerState.HIT;
         }
+        //if (col.gameObject.tag == "floor" || col.gameObject.tag == "Enemy" || col.gameObject.tag == "Border" ) //ResetPlayerPos();
+        //{
+            
+        //    //animation of dead
+        //    //ResetPlayerPos();
+        //}
     }
 
     void OnTriggerEnter2D(Collider2D col)

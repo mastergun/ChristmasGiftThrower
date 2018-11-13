@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class AutoMovement : MonoBehaviour {
 
-    public Vector3 speed = Vector3.zero;
-    Vector3 savedSpeed = Vector3.zero;
+    public float speed = 0.1f;
+    public Vector3 dir = Vector3.zero;
+    float savedSpeed = 0;
 	// Use this for initialization
 	void Start () {
+        dir = dir.normalized;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        this.transform.position += speed;
+        this.transform.position += (dir * speed);
 	}
 
     public void Freeze()
     {
         savedSpeed = speed;
         Debug.Log("speed saved : "+ savedSpeed);
-        speed = Vector3.zero;
+        speed = 0;
     }
 
     public void UnFreeze()
@@ -27,5 +29,10 @@ public class AutoMovement : MonoBehaviour {
         speed = savedSpeed;
         Debug.Log("speed seted : " + speed);
         //speed = Vector3.zero;
+    }
+
+    public void SetToPlayerDir(Vector3 playerPos)
+    {
+        dir = (playerPos - this.transform.position).normalized;
     }
 }

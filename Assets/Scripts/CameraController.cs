@@ -19,10 +19,11 @@ public class CameraController : MonoBehaviour {
 	void Update () {
         if (attached)
         {
-            if (playerRef.transform.position.y > InitPos.y && 
+            if ((playerRef.transform.position.y) > InitPos.y && 
                 playerRef.transform.position.y < playerRef.GetComponent<Player>().maxHeight)
             {
                 Vector3 newPos = playerRef.transform.position;
+                newPos.y -= 1f;
                 newPos.z = InitPos.z;
                 this.transform.position = newPos;
             }   

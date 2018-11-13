@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour {
 
-    [System.Serializable]
-    public struct EnemyPrefs
-    {
-        public Vector2 velocity;
-        public Vector2 MinMaxYdist;
-        public bool oscilate;
-        public bool shoter;
-        public float time;
-    }
-
     enum EnemyType
     {
         PLAIN,
@@ -22,13 +12,13 @@ public class EnemySpawner : MonoBehaviour {
         BIRD
     }
 
-    public List<EnemyPrefs> enemiesData;
-    public GameObject enemyPrefab;
+    public List<Vector2> MinMaxYdist;
+    public List<GameObject> enemyPrefab;
     public GameObject warningPrefab;
     public GameObject playerRef;
 
     public GameObject warningRootHUD;
-    public GameObject initWarningPos;
+    public List<GameObject> initWarningsPos;
 
     // Use this for initialization
     void Start () {
@@ -44,30 +34,26 @@ public class EnemySpawner : MonoBehaviour {
     {
         int randomNumber = Random.Range(0, 4);
         GameObject e = InicializeEnemy(rootPos, (EnemyType)randomNumber);
-        InicializeWarningAlert(e.GetComponent<Enemy>());
+        InicializeWarningAlert(e.GetComponent<Enemy>(), randomNumber);
         return e;
     }
 
     GameObject InicializeEnemy(Vector3 rootPos, EnemyType type)
     {
         GameObject e;
-        Vector2 mmyd = enemiesData[(int)type].MinMaxYdist;
+        Vector2 mmyd = MinMaxYdist[(int)type];
         if(mmyd.y > -4f)rootPos.y = playerRef.transform.position.y + Random.Range(mmyd.x, mmyd.y);
-        e = (GameObject)Instantiate(enemyPrefab, rootPos, transform.rotation);
-        e.GetComponent<AutoMovement>().speed= enemiesData[(int)type].velocity;
-        e.GetComponent<Enemy>().oscilate = enemiesData[(int)type].oscilate;
-        e.GetComponent<Enemy>().shoter = enemiesData[(int)type].shoter;
-        e.GetComponent<AutoDestroy>().lifeTime = enemiesData[(int)type].time;
-        e.GetComponent<Enemy>().enemyState = Enemy.STATE.PREPARING;
+        e = (GameObject)Instantiate(enemyPrefab[(int)type], rootPos, transform.rotation);
+        if (type == EnemyType.METEORITE) e.GetComponent<AutoMovement>().SetToPlayerDir(playerRef.transform.position);
         return e;
     }
 
-    public void InicializeWarningAlert(Enemy enemyRef)
+    public void InicializeWarningAlert(Enemy enemyRef, int type)
     {
         GameObject a;
         a = (GameObject)Instantiate(warningPrefab, Vector3.zero, transform.rotation);
         a.transform.SetParent(warningRootHUD.transform, false);
-        a.transform.position = new Vector3(initWarningPos.transform.position.x, initWarningPos.transform.position.y, 0);
+        a.transform.position = new Vector3(initWarningsPos[type%3].transform.position.x, initWarningsPos[type % 3].transform.position.y, 0);
         a.GetComponent<WarningScript>().enemyRef = enemyRef;
         //set enemy ref in the warning code
     }

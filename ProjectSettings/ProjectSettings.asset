@@ -122,7 +122,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.0
+  bundleVersion: 1.1
   preloadedAssets:
   - {fileID: 1158686450312182, guid: 0ebc9b5ee8228b346a22f5f6adba70ef, type: 2}
   - {fileID: 1824457916504328, guid: abdfa8443b4e1e140b1d3e05133a90e5, type: 2}
@@ -164,7 +164,7 @@ PlayerSettings:
     Android: com.MirrorGames.CristmasGiftThrower
     Standalone: com.Company.ProductName
   buildNumber: {}
-  AndroidBundleVersionCode: 2
+  AndroidBundleVersionCode: 3
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1

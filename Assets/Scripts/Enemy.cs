@@ -24,8 +24,8 @@ public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        enemyState = STATE.PREPARING;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -49,14 +49,14 @@ public class Enemy : MonoBehaviour {
                 if (oscilate && dt > 0.01)
                 {
                     oscilaterCoutner += 0.1f;
-                    GetComponent<AutoMovement>().speed.y = Mathf.Sin(oscilaterCoutner) / 10;
+                    GetComponent<AutoMovement>().dir.y = Mathf.Sin(oscilaterCoutner) / 10;
                     dt = 0;
                 }
 
-                if (shoter && dt > 0.2f)
+                if (shoter && dt > 0.7f)
                 {
                     GameObject missile = ShotMisile();
-                    missile.GetComponent<Rigidbody2D>().AddForce(new Vector2(-0.7f, 1f) * (mf + Random.Range(0, 1000)));
+                    missile.GetComponent<Rigidbody2D>().AddForce(new Vector2(-0.7f, 1f) * (mf + Random.Range(500, 1500)));
                     shoter = false;
                 }
                 break;
