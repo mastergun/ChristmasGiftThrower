@@ -39,12 +39,25 @@ public class Player : MonoBehaviour {
                 break;
 
             case PlayerState.FLYING:
-                if (this.transform.position.y < maxHeight / 3.5) GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1) * force);
-                //if (this.transform.rotation.z < 0.5) this.transform.Rotate(new Vector3(0, 0, 1), GetComponent<Rigidbody2D>().velocity.y / 5);
+                if ((this.transform.position.y < maxHeight / 3.5) || this.GetComponent<Rigidbody2D>().velocity.y < 0) GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1) * force);
+                else this.GetComponent<Rigidbody2D>().velocity -= new Vector2(0, 0.1f);
+                //if (this.transform.rotation.z < 0.3) this.transform.Rotate(new Vector3(0, 0, 1), GetComponent<Rigidbody2D>().velocity.y / 5);
+                //else
+                //{
+                //    Quaternion b = Quaternion.identity;
+                //    b.z = 0.3f;
+                //    this.transform.rotation = b;
+                //}
                 break;
 
             case PlayerState.FALLING:
-                if (this.transform.rotation.z > -0.3) this.transform.Rotate(new Vector3(0, 0, 1), GetComponent<Rigidbody2D>().velocity.y / 10);
+                //if (this.transform.rotation.z > -0.3) this.transform.Rotate(new Vector3(0, 0, 1), GetComponent<Rigidbody2D>().velocity.y / 10);
+                //else {
+                //    Quaternion b = Quaternion.identity;
+                //    b.z = -0.3f;
+                //    this.transform.rotation = b;
+                //}
+                //if (this.transform.rotation.z > -0.3) transform.RotateAroundLocal(0,0,1);
                 break;
 
             case PlayerState.HIT:

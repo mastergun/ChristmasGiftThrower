@@ -14,7 +14,7 @@ public class GamePlayManager : MonoBehaviour {
     }
     public GameState gameState;
     public GameObject housesRoot;
-    public GameObject housePrefab;
+    public List<GameObject> housePrefab;
     public GameObject houseLocatorPrefab;
 
     public Player playerRef;
@@ -92,7 +92,7 @@ public class GamePlayManager : MonoBehaviour {
     {
         GameObject g;
         Vector3 position = housesRoot.transform.position;
-        g = (GameObject)Instantiate(housePrefab, position, transform.rotation);
+        g = (GameObject)Instantiate(housePrefab[Random.Range(0,housePrefab.Count)], position, transform.rotation);
         InicializeHouseAlert(g);
         housesInGame.Add(g);
 
