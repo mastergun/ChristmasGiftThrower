@@ -17,7 +17,7 @@ public class WarningScript : MonoBehaviour {
         dt += Time.deltaTime;
         if (dt > lifeTime)
         {
-            Debug.Log("enemyref call");
+
             enemyRef.enemyState = Enemy.STATE.WARNING;
             GetComponent<AutoDestroy>().SelfDestruction();
         }

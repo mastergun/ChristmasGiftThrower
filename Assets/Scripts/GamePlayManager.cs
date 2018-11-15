@@ -24,6 +24,7 @@ public class GamePlayManager : MonoBehaviour {
 
     float currentTimeBtwEnemies;
     private List<GameObject> enemiesInGame;
+    private List<GameObject> housesInGame;
     private float dth = 0;
     private float dte = 0;
     int publiCounter = 0;
@@ -31,6 +32,7 @@ public class GamePlayManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         enemiesInGame = new List<GameObject>();
+        housesInGame = new List<GameObject>();
         currentTimeBtwEnemies = maxTimeBtwEnemies;
         gameState = GameState.WAITING;
     }
@@ -65,12 +67,13 @@ public class GamePlayManager : MonoBehaviour {
 
             case GameState.ENDING:
                 //freezeEnemies();
+                freeze();
                 endedGame = true;
                 gameState = GameState.WAITING;
                 break;
 
             case GameState.RESET:
-                RemoveEnemiesInGame();
+                ResetGame();
                 GetComponent<ScoreManager>().CompareScore();
                 GetComponent<ScoreManager>().parseScore = false;
                 GetComponent<InterfaceController>().SetRestartMenu();
@@ -90,25 +93,29 @@ public class GamePlayManager : MonoBehaviour {
         GameObject g;
         Vector3 position = housesRoot.transform.position;
         g = (GameObject)Instantiate(housePrefab, position, transform.rotation);
+        InicializeHouseAlert(g);
+        housesInGame.Add(g);
 
     }
 
-    public void InicializeWarningAlert(Enemy enemyRef)
+    public void InicializeHouseAlert(GameObject houseRef)
     {
         GameObject a;
         a = (GameObject)Instantiate(houseLocatorPrefab, Vector3.zero, transform.rotation);
-        //a.transform.SetParent(warningRootHUD.transform, false);
-        //a.transform.position = new Vector3(initWarningPos.transform.position.x, initWarningPos.transform.position.y, 0);
+        a.transform.SetParent(GetComponent<EnemySpawner>().warningRootHUD.transform, false);
+        a.GetComponent<HouseSymbolScript>().houseRef = houseRef;
+        a.GetComponent<HouseSymbolScript>().playerRef = playerRef.gameObject;
+        a.GetComponent<HouseSymbolScript>().SetAltitude(GetComponent<EnemySpawner>().initWarningsPos[2].transform.position.y);
         
         //set enemy ref in the warning code
     }
-    public void freezeEnemies()
+    public void freeze()
     {
-        if (enemiesInGame != null)
+        if (housesInGame != null)
         {
-            for (int i = 0; i < enemiesInGame.Count; i++)
+            for (int i = 0; i < housesInGame.Count; i++)
             {
-                if(enemiesInGame[i] != null) enemiesInGame[i].GetComponent<Enemy>().enemyState = Enemy.STATE.WAITING;
+                if(housesInGame[i] != null) housesInGame[i].GetComponent<AutoMovement>().Freeze();
             }
         }
     }
@@ -124,9 +131,22 @@ public class GamePlayManager : MonoBehaviour {
         }
     }
 
+    public void RemoveHousesInGame()
+    {
+        if (housesInGame != null)
+        {
+            for (int i = 0; i < housesInGame.Count; i++)
+            {
+                if (housesInGame[i] != null) housesInGame[i].GetComponent<AutoDestroy>().SelfDestruction();
+            }
+            housesInGame.Clear();
+        }
+    }
+
     public void ResetGame()
     {
         RemoveEnemiesInGame();
+        RemoveHousesInGame();
         currentTimeBtwEnemies = maxTimeBtwEnemies;
         endedGame = false;
     }

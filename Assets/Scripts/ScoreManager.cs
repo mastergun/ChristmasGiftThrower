@@ -138,10 +138,10 @@ public class ScoreManager : MonoBehaviour {
     {
         Score s;
         s.points = save.score.maxScorePoints;
-        Debug.Log("current max score : "+ s.points);
+
         s.time = save.score.bestTime;
         maxScore = s;
-        Debug.Log(maxScore.points);
+
         firstTimeGame = save.firstTimeGame;
     }
 

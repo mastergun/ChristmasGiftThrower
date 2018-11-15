@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour {
                 enemyState = STATE.WAITING;
                 break;
             case STATE.WARNING:
-                Debug.Log("moving enemy");
+
                 if (freezed)
                 {
                     GetComponent<AutoMovement>().UnFreeze();

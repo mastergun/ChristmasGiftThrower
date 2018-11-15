@@ -40,7 +40,7 @@ public class Player : MonoBehaviour {
 
             case PlayerState.FLYING:
                 if (this.transform.position.y < maxHeight / 3.5) GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1) * force);
-                if (this.transform.rotation.z < 0.5) this.transform.Rotate(new Vector3(0, 0, 1), GetComponent<Rigidbody2D>().velocity.y / 5);
+                //if (this.transform.rotation.z < 0.5) this.transform.Rotate(new Vector3(0, 0, 1), GetComponent<Rigidbody2D>().velocity.y / 5);
                 break;
 
             case PlayerState.FALLING:
@@ -100,7 +100,7 @@ public class Player : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Enemy")
+        if (col.gameObject.tag == "Enemy" && !gameplayRef.endedGame)
         {
             if (playerState != PlayerState.HIT || playerState != PlayerState.DIYING) playerState = PlayerState.HIT;
         }
