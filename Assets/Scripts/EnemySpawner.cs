@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour {
 
     public List<Vector2> MinMaxYdist;
     public List<GameObject> enemyPrefab;
-    public GameObject warningPrefab;
+    public List<GameObject> warningPrefab;
     public GameObject playerRef;
 
     public GameObject warningRootHUD;
@@ -45,13 +45,14 @@ public class EnemySpawner : MonoBehaviour {
         if(mmyd.y > -4f)rootPos.y = playerRef.transform.position.y + Random.Range(mmyd.x, mmyd.y);
         e = (GameObject)Instantiate(enemyPrefab[(int)type], rootPos, transform.rotation);
         if (type == EnemyType.METEORITE) e.GetComponent<AutoMovement>().SetToPlayerDir(playerRef.transform.position);
+        e.GetComponent<AudioSource>().volume = GetComponent<AudioManager>().effectsVol;
         return e;
     }
 
     public void InicializeWarningAlert(Enemy enemyRef, int type)
     {
         GameObject a;
-        a = (GameObject)Instantiate(warningPrefab, Vector3.zero, transform.rotation);
+        a = (GameObject)Instantiate(warningPrefab[type], Vector3.zero, transform.rotation);
         a.transform.SetParent(warningRootHUD.transform, false);
         a.transform.position = new Vector3(initWarningsPos[type%3].transform.position.x, initWarningsPos[type % 3].transform.position.y, 0);
         a.GetComponent<WarningScript>().enemyRef = enemyRef;

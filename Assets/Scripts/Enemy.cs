@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour {
                     GetComponent<AutoMovement>().UnFreeze();
                     freezed = false;
                 }
+                GetComponent<AudioSource>().Play();
                 enemyState = STATE.ACTIVATING;
                 break;
             case STATE.ACTIVATING:

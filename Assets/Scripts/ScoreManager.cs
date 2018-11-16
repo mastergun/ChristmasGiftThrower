@@ -85,6 +85,7 @@ public class ScoreManager : MonoBehaviour {
             SaveGame();
             SetMainMenuScoreText();
             HighScoreBG.SetActive(true);
+            GetComponent<AudioManager>().PlayGameEffect(6);
         }
         return false;
     }

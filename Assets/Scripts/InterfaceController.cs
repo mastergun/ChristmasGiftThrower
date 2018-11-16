@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class InterfaceController : MonoBehaviour {
 
@@ -17,18 +18,21 @@ public class InterfaceController : MonoBehaviour {
     public GameObject addScorePrefab;
 
     public List<GameObject> menus;
-    bool openingGame = false;
+    bool openingGame = true;
 
     // Use this for initialization
     void Start()
     {
-        SetMainMenu();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(SplashScreen.isFinished && openingGame)
+        {
+            openingGame = false;
+            SetMainMenu();
+        }
     }
 
     public void SetMainMenu()

@@ -35,6 +35,7 @@ public class Shoter : MonoBehaviour {
     {
         if (!giftThrowed && playerRef.GetComponent<Player>().activateInput) {
             InicializeGift();
+            GetComponent<AudioManager>().PlayGameEffect(5);
             giftThrowed = true;
         }        
     }
@@ -43,6 +44,7 @@ public class Shoter : MonoBehaviour {
     {
         GameObject g;
         Vector3 position = playerRef.transform.position;
+        position.z = 4;
         g = (GameObject)Instantiate(giftPrefab, position, transform.rotation);
         g.GetComponent<Gift>().smRef = GetComponent<ScoreManager>();
         g.GetComponent<Rigidbody2D>().AddForce(shoterDir * shoterForce);

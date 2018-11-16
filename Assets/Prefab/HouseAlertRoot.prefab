@@ -41,8 +41,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5180847cb9a37884cb8d504c51913f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRange: 10
-  maxRange: 30
+  minRange: 5
+  maxRange: 10
   houseRef: {fileID: 0}
   playerRef: {fileID: 0}
 --- !u!114 &114319746853656494

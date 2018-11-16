@@ -5,28 +5,28 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
 
     public GameObject playerRef;
-    
-    Vector3 InitPos;
+    public float minAltitude = 0;
+    public Vector3 InitPos;
     bool attached = false;
 	// Use this for initialization
 	void Start () {
-        InitPos = this.transform.position;
         ConnectCamera();
-       
+        minAltitude = playerRef.GetComponent<Player>().initPos.y;
     }
 	
 	// Update is called once per frame
 	void Update () {
         if (attached)
         {
-            if ((playerRef.transform.position.y) > InitPos.y && 
+            if ((playerRef.transform.position.y - 2) >= InitPos.y &&
                 playerRef.transform.position.y < playerRef.GetComponent<Player>().maxHeight)
             {
                 Vector3 newPos = playerRef.transform.position;
-                newPos.y -= 1f;
+                //Vector3 newPos = Vector3.zero;
+                newPos.y -= 2f;
                 newPos.z = InitPos.z;
                 this.transform.position = newPos;
-            }   
+            }
         }
 	}
 

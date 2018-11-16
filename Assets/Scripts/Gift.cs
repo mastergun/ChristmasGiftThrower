@@ -22,6 +22,7 @@ public class Gift : MonoBehaviour {
         {
             smRef.AddScore(true);
             GetComponent<AutoDestroy>().SelfDestruction();
+            smRef.GetComponent<AudioManager>().PlayGameEffect(2);
         }
     }
 }
