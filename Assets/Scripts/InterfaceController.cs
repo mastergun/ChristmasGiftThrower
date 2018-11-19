@@ -19,7 +19,7 @@ public class InterfaceController : MonoBehaviour {
 
     public List<GameObject> menus;
     bool openingGame = true;
-
+    float dt = 0;
     // Use this for initialization
     void Start()
     {
@@ -28,7 +28,8 @@ public class InterfaceController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if(SplashScreen.isFinished && openingGame)
+        if (dt < 4) dt += Time.deltaTime;
+        if(SplashScreen.isFinished && openingGame && dt<4)
         {
             openingGame = false;
             SetMainMenu();
